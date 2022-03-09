@@ -1,0 +1,43 @@
+version: "3.9"
+services:
+  app:
+    image: alpine:latest
+    stdin_open: true 
+    tty: true     
+    networks:
+      - network2
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: postgreostgresql/data
+      POSTGRES_USER: juan 
+      POSTGRES_PASSWORD: secret
+      PGDATA: /var/lib/p
+    networks:
+      - network1
+    volumes:
+      - C:\Users\JUAN DAVID\tarea\tablas.sql:/docker-entrypoint-initdb.d/tablas.sql
+    ports:
+      - "5432:5432"
+
+  
+ 
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: juan.cabrera.lopez@correounivalle.edu.co
+      PGADMIN_DEFAULT_PASSWORD: postgres123
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - "80:80"
+    networks:
+      - network2
+      - network1
+    
+
+networks:
+  network1:
+  network2:
